@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neighborhood Demographics Covenant Map</title>
+
+    <link rel="stylesheet" href="css/nouislider.css">
+    <script src="js/nouislider.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+    <link rel="stylesheet" href="css/leaflet-sidebar.css"/>
+    <script src="js/leaflet-sidebar.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <div id="sidebar" class="sidebar collapsed">
+      <!-- Tab navigation buttons (left strip) -->
+      <div class="sidebar-tabs">
+        <ul role="tablist">
+          <li><a href="#home" role="tab"><img src="icons/bars.svg" class="icon"></a></li>
+          <li><a href="#layers" role="tab"><img src="icons/layer-group.svg" class="icon"></a></li>
+          <li><a href="#about" role="tab"><img src="icons/question.svg" class="icon"></a></li>
+          <!-- External link (not a tab pane) -->
+        </ul>
+        <!-- Bottom-aligned tabs (optional) -->
+        <ul role="tablist">
+        </ul>
+      </div>
+      <!-- Tab content panes -->
+      <div class="sidebar-content">
+        <div class="sidebar-pane" id="home">
+          <h1 class="sidebar-header">
+            Demographics
+            <span class="sidebar-close"><i class="fa fa-caret-right"></i></span>
+          </h1>
+          <div class="sidebar-wrapper">
+            <h3>Map Options</h3>
+            <div id="mode" class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn active" id="snapshot">Snapshot Comparison</button>
+              <button type="button" class="btn" id="change">Change Over Time</button>
+            </div>
+            <div class="year-race-dropdown-wrapper">
+            <!-- Race select -->
+            <div class="control-wrapper active">
+              <span>Race:</span>
+              <div class="dropdown-group">
+                  <button class="dropdown-toggle btn" id="race-select">Asian ▾</button>
+                  <div class="dropdown-panel" id="race-buttons">
+                    <a class="dropdown-item active" data-value="asian">Asian</a>
+                    <a class="dropdown-item" data-value="black">Black</a>
+                    <a class="dropdown-item" data-value="other">Other</a>
+                    <a class="dropdown-item" data-value="white">White</a>
+                  </div>
+              </div>
+            </div>
+            <!-- Snapshot year -->
+            <div class="control-wrapper active" id="snapshot-controls">
+              <span>Year:</span>
+              <div class="dropdown-group">
+                  <button class="dropdown-toggle btn" id="snapshot-year-select">1940 ▾</button>
+                  <div class="dropdown-panel" id="snapshot-year-buttons">
+                    <a class="dropdown-item active" data-value="1940">1940</a>
+                    <a class="dropdown-item" data-value="1950">1950</a>
+                    <a class="dropdown-item" data-value="1960">1960</a>
+                    <a class="dropdown-item" data-value="1970">1970</a>
+                    <a class="dropdown-item" data-value="1980">1980</a>
+                    <a class="dropdown-item" data-value="1990">1990</a>
+                    <a class="dropdown-item" data-value="2000">2000</a>
+                    <a class="dropdown-item" data-value="2010">2010</a>
+                    <a class="dropdown-item" data-value="2020">2020</a>
+                  </div>
+              </div>
+            </div>
+            <!-- Change years -->
+            <div class="control-wrapper" id="change-controls">
+              <span>Year:</span>
+              <div class="dropdown-group">
+                  <button class="dropdown-toggle btn" id="change-from-select">1940 ▾</button>
+                  <div class="dropdown-panel" id="change-from-buttons">
+                    <a class="dropdown-item active" data-value="1940">1940</a>
+                    <a class="dropdown-item" data-value="1950">1950</a>
+                    <a class="dropdown-item" data-value="1960">1960</a>
+                    <a class="dropdown-item" data-value="1970">1970</a>
+                    <a class="dropdown-item" data-value="1980">1980</a>
+                    <a class="dropdown-item" data-value="1990">1990</a>
+                    <a class="dropdown-item" data-value="2000">2000</a>
+                    <a class="dropdown-item" data-value="2010">2010</a>
+                    <a class="dropdown-item" data-value="2020">2020</a>
+                  </div>
+              </div>
+              <span>—</span>
+              <div class="dropdown-group">
+                  <button class="dropdown-toggle btn" id="change-to-select">2020 ▾</button>
+                  <div class="dropdown-panel" id="change-to-buttons">
+                    <h6 class="dropdown-header">Year</h6>
+                    <a class="dropdown-item" data-value="1940">1940</a>
+                    <a class="dropdown-item" data-value="1950">1950</a>
+                    <a class="dropdown-item" data-value="1960">1960</a>
+                    <a class="dropdown-item" data-value="1970">1970</a>
+                    <a class="dropdown-item" data-value="1980">1980</a>
+                    <a class="dropdown-item" data-value="1990">1990</a>
+                    <a class="dropdown-item" data-value="2000">2000</a>
+                    <a class="dropdown-item" data-value="2010">2010</a>
+                    <a class="dropdown-item active" data-value="2020">2020</a>
+                  </div>
+              </div>
+            </div>
+            </div>
+            <div id="district-info">
+                <p>Click a district to view details.</p>
+            </div>
+            <div class="chart-wrapper" id="ed-bar-chart"></div>
+            <div class="chart-wrapper" id="ed-line-chart"></div>
+          </div>
+        </div>
+        <div class="sidebar-pane" id="layers">
+          <h1 class="sidebar-header">
+            Layers
+            <span class="sidebar-close"><i class="fa fa-caret-right"></i></span>
+          </h1>
+          <div class="sidebar-wrapper">
+            <p>Welcome to my layer!</p>
+          </div>
+        </div>
+        <div class="sidebar-pane" id="about">
+          <h1 class="sidebar-header">
+            About
+            <span class="sidebar-close"><i class="fa fa-caret-right"></i></span>
+          </h1>
+          <div class="sidebar-wrapper">
+            <p>Profile content here.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="map"></div>
+    <script type="module" src="js/index.js"></script>
+  </body>
+</html>
