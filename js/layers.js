@@ -101,7 +101,7 @@ export async function loadLayers(map, getState) {
                 color: '#949bff',
                 weight: 2
             };
-        } else {
+        } else if (mode === 'change'){
             const rowFrom = feature.properties.rows.find(function(r) { return r.year === yearFrom; });
             const rowTo   = feature.properties.rows.find(function(r) { return r.year === yearTo; });
             const shareFrom = rowFrom ? rowFrom['share_' + race] : null;
@@ -110,6 +110,15 @@ export async function loadLayers(map, getState) {
                 ? shareTo - shareFrom : null;
             return {
                 fillColor: getChangeColor(change),
+                fillOpacity: 0.7,
+                color: '#949bff',
+                weight: 2
+            };
+        } else if (mode === 'covenant') {
+            const row = feature.properties.rows.find(function(r) { return r.year === year; });
+            const covenantValue = row ? row['covenant'] : null;
+            return {
+                fillColor: covenantValue === 1 ? 'red' : 'blue',
                 fillOpacity: 0.7,
                 color: '#949bff',
                 weight: 2
@@ -196,7 +205,7 @@ export async function loadLayers(map, getState) {
         }
     });
 
-    const legend = L.control({ position: 'bottomleft' });
+    const legend = L.control({ position: 'bottomright' });
 
     legend.onAdd = function() {
         this._div = L.DomUtil.create('div', 'legend');
@@ -207,12 +216,21 @@ export async function loadLayers(map, getState) {
         const { mode, race, year, yearFrom, yearTo } = detail;
         const raceName = race.charAt(0).toUpperCase() + race.slice(1);
 
-        const title = mode === 'snapshot'
-            ? raceName + ' population share, ' + year
-            : raceName + ' population change, <span style="white-space: nowrap">' + yearFrom + '–' + yearTo + '</span>';
+        let title, colors, legendLabels;
 
-        const colors = mode === 'snapshot' ? divergingColors : changeColors;
-        const legendLabels = mode === 'snapshot' ? labels : changeLabels;
+        if (mode === 'snapshot') {
+            title = raceName + ' population share, ' + year;
+            colors = divergingColors;
+            legendLabels = labels;
+        } else if (mode === 'change') {
+            title = raceName + ' population change, <span style="white-space: nowrap">' + yearFrom + '–' + yearTo + '</span>';
+            colors = changeColors;
+            legendLabels = changeLabels;
+        } else if (mode === 'covenant') {
+            title = 'Covenant Status';
+            colors = ['blue', 'red'];
+            legendLabels = ['No Covenants', 'Has Covenants'];
+        }
 
         this._div.innerHTML = '<h4>' + title + '</h4>' +
             '<div class="legend-rows">' +

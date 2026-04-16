@@ -26,19 +26,20 @@ function dispatchSelection() {
 
 function initMap() {
     const map = L.map('map').setView([37.33, -121.89], 13);
-    const info = L.control({ position: 'topright' });
 
-    // load map tiles and add to map
+    // Basemap
     var tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 17
     }).addTo(map);
 
+    // Pane for basemap labels
     map.createPane('labels');
     map.getPane('labels').style.zIndex = 650;
     map.getPane('labels').style.pointerEvents = 'none';
 
+    // Basemap labels
     var tileLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png', {
         pane: 'labels',
         subdomains: 'abcd',
@@ -49,14 +50,13 @@ function initMap() {
 };
 
 function initSidebar(map) {
+
     var sidebar = L.control.sidebar('sidebar', {
-    position: 'right'   // or 'right'
+        position: 'left'
     });
+
     map.addControl(sidebar);
-    // Optionally open a tab on load
-    setTimeout(function() {
     sidebar.open('home');
-    }, 500);
 };
 
 function initDropdown(toggleId, panelId, onSelect) {
@@ -149,13 +149,13 @@ document.getElementById('mode').querySelectorAll('.btn').forEach(function(btn) {
         });
         this.classList.add('active');
         activeMode = this.id;
-        setModeVisibility(activeMode); // ← toggle visibility
+        console.log(activeMode);
+        setModeVisibility(activeMode);
 
         dispatchSelection();
     });
 });
 
-// Set initial visibility on load
 setModeVisibility('snapshot');
 
 const map = initMap();
@@ -163,3 +163,18 @@ const enumDistricts = await loadLayers(map, function() {
     return { mode: activeMode, race: activeRace, year: activeYear, yearFrom: activeYearFrom, yearTo: activeYearTo };
 });
 initSidebar(map);
+
+L.easyButton('<img src="icons/home.svg" class="icon">', function(btn, map){
+    map.setView([37.33, -121.89], 13);
+}).addTo(map);
+
+// add searchbar and reset easybutton
+var geocoder = L.Control.Geocoder.nominatim({
+    geocodingQueryParams: {
+        countrycodes: 'us'
+    }
+})
+L.Control.geocoder({
+        geocoder: geocoder,
+        position: 'topleft'
+    }).addTo(map);

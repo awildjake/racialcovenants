@@ -15,12 +15,8 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin=""></script>
 
-    <link rel="stylesheet" href="css/leaflet-sidebar-2.css"/>
-    <script src="js/leaflet-sidebar-2.js"></script>
-    <link rel="stylesheet" href="css/easy-button.css"/>
-    <script src="js/easy-button.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <link rel="stylesheet" href="css/leaflet-sidebar.css"/>
+    <script src="js/leaflet-sidebar.js"></script>
 
     <link rel="stylesheet" href="css/style.css">
 
@@ -33,9 +29,9 @@
   </head>
   <body>
     <!-- SIDEBAR -->
-    <div id="sidebar" class="leaflet-sidebar collapsed">
+    <div id="sidebar" class="sidebar">
       <!-- Tab navigation buttons (left strip) -->
-      <div class="leaflet-sidebar-tabs">
+      <div class="sidebar-tabs">
         <ul role="tablist">
           <li><a href="#home" role="tab"><img src="icons/bars.svg" class="icon"></a></li>
           <li><a href="#layers" role="tab"><img src="icons/layer-group.svg" class="icon"></a></li>
@@ -47,18 +43,16 @@
         </ul>
       </div>
       <!-- Tab content panes -->
-      <div class="leaflet-sidebar-content">
-        <div class="leaflet-sidebar-pane active" id="home">
-          <h1 class="leaflet-sidebar-header">
+      <div class="sidebar-content">
+        <div class="sidebar-pane active" id="home">
+          <h1 class="sidebar-header">
             Demographics
-            <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+            <span class="sidebar-close"><i class="fa fa-caret-right"></i></span>
           </h1>
           <div class="sidebar-wrapper">
             <h3>Map Options</h3>
-            <!-- Mode buttons -->
-            <div id="mode" class="btn-group" role="group">
-              <button type="button" class="btn active" id="snapshot">Composition</button>
-              <button type="button" class="btn" id="covenant">Covenants</button>
+            <div id="mode" class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn active" id="snapshot">Snapshot Comparison</button>
               <button type="button" class="btn" id="change">Change Over Time</button>
             </div>
             <div class="year-race-dropdown-wrapper">
@@ -135,19 +129,19 @@
             <div class="chart-wrapper" id="ed-line-chart"></div>
           </div>
         </div>
-        <div class="leaflet-sidebar-pane" id="layers">
-          <h1 class="leaflet-sidebar-header">
+        <div class="sidebar-pane" id="layers">
+          <h1 class="sidebar-header">
             Layers
-            <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+            <span class="sidebar-close"><i class="fa fa-caret-right"></i></span>
           </h1>
-          <div class="leaflet-sidebar-pane">
+          <div class="sidebar-wrapper">
             <p>Welcome to my layer!</p>
           </div>
         </div>
-        <div class="leaflet-sidebar-pane" id="about">
-          <h1 class="leaflet-sidebar-header">
+        <div class="sidebar-pane" id="about">
+          <h1 class="sidebar-header">
             About
-            <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+            <span class="sidebar-close"><i class="fa fa-caret-right"></i></span>
           </h1>
           <div class="sidebar-wrapper">
             <p>Profile content here.</p>

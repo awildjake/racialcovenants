@@ -65,6 +65,12 @@ h3 {
     width: 100%;
 }
 
+.btn-group>.btn:hover {
+    background-color: #534f44;
+    width: 100%;
+    cursor: pointer;
+}
+
 .btn-group>.btn.active {
     background-color: #205EA6
 }
@@ -154,38 +160,45 @@ h3 {
 }
 
 /* Modifications to leaflet-sidebar.css */
-.sidebar {
-    overflow: visible;
+.leaflet-sidebar{
+    font-family: "Libre Baskerville", serif;
+}
+.leaflet-sidebar.leaflet-touch {
+    box-shadow: none;
 }
 
-.sidebar-content {
+.leaflet-sidebar-content {
     background-color: rgb(255, 252, 240);
 }
 
-.sidebar-tabs {
+.leaflet-sidebar-tabs {
     background-color: rgb(255, 252, 240);
 }
 
-.sidebar-tabs ul li a {
+.leaflet-sidebar-tabs ul li a {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.sidebar-header {
+.leaflet-sidebar-header {
     margin-bottom: 1em;
     background-color: #dcd8c0;
     color: #454138;
 }
 
-.sidebar-tabs > li.active, .sidebar-tabs > ul > li.active {
+.leaflet-sidebar-tabs > li.active, .leaflet-sidebar-tabs > ul > li.active {
+    color: #454138;
+    background-color: #dcd8c0;
+}
+
+.leaflet-sidebar-tabs > li.active, .sidebar-tabs > ul > li.active {
     color: #454138;
     background-color: #dcd8c0;
 }
 
 .sidebar.sidebar-right.leaflet-touch.collapsed {
     display: flex;
-    height: 120px;
     align-items: center;
     justify-content: center;
 }
@@ -200,13 +213,20 @@ h3 {
     .sidebar {
         top: 10px;
         bottom: 10px;
-        transition: width 500ms;
+        border: 2px solid rgba(0, 0, 0, 0.2)
     }
 }
 
+/* Sets style override for all leaflet buttons*/
+.leaflet-bar button {
+    color: #454138;
+    background-color: rgb(255, 252, 240);
+}
+
+/* Puts a little dividing line between zoom in and zoom out*/
 .leaflet-bar a {
     color: #454138;
-    background-color: #dcd8c0;
+    background-color: rgb(255, 252, 240);
     border-bottom: 1px solid #d1cdb7;
 }
 
