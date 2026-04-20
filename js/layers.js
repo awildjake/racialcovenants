@@ -98,7 +98,7 @@ export async function loadLayers(map, getState) {
             return {
                 fillColor: getColor(value, mean, sd),
                 fillOpacity: 0.7,
-                color: '#949bff',
+                color: 'rgb(230, 228, 217)',
                 weight: 2
             };
         } else if (mode === 'change'){
@@ -111,7 +111,7 @@ export async function loadLayers(map, getState) {
             return {
                 fillColor: getChangeColor(change),
                 fillOpacity: 0.7,
-                color: '#949bff',
+                color: 'rgb(230, 228, 217)',
                 weight: 2
             };
         } else if (mode === 'covenant') {
@@ -120,7 +120,7 @@ export async function loadLayers(map, getState) {
             return {
                 fillColor: covenantValue === 1 ? 'red' : 'blue',
                 fillOpacity: 0.7,
-                color: '#949bff',
+                color: 'rgb(230, 228, 217)',
                 weight: 2
             };
         }
@@ -131,8 +131,7 @@ export async function loadLayers(map, getState) {
     function selectDistrict(enumdist, layer, rows) {
         selectedRows = rows;
         document.getElementById('district-info').innerHTML =
-            '<p>Details for enumeration district ' + enumdist + '.</p>' +
-            '<p><strong>Covenant Status:</strong> ' + rows[0].covenant_present + '</p>';
+            '<strong style="text-align: center;">Enumeration District: ' + enumdist + '.</strong>';
 
         const { mode, year, yearFrom, yearTo } = getState();
 
@@ -164,12 +163,34 @@ export async function loadLayers(map, getState) {
         }
     }).addTo(districtGroup);
 
+
+    let mouseOverSidebar = false;
+    const sidebar = document.getElementById('sidebar');
+
+    if (sidebar) {
+        sidebar.addEventListener('mouseenter', function() {
+            mouseOverSidebar = true;
+            // Clear any active hover when entering sidebar
+            if (hoveredLayer) {
+                hoveredLayer._isHovered = false;
+                hoveredLayer.setStyle(getFeatureStyle(hoveredLayer.feature));
+                hoveredLayer = null;
+            }
+        });
+        sidebar.addEventListener('mouseleave', function() {
+            mouseOverSidebar = false;
+        });
+    }
+
     // Handle hover at the map level to avoid missed mouseout events on fast movement
     map.on('mousemove', function(e) {
+        if (mouseOverSidebar) return;
         let foundLayer = null;
 
+        const point = map.latLngToLayerPoint(e.latlng); // ✅ convert to pixel coords
+
         enumDistricts.eachLayer(function(layer) {
-            if (layer.getBounds().contains(e.latlng)) {
+            if (layer._containsPoint && layer._containsPoint(point)) { // ✅ real geometry check
                 foundLayer = layer;
             }
         });
@@ -187,8 +208,8 @@ export async function loadLayers(map, getState) {
             foundLayer._isHovered = true;
             foundLayer.setStyle({
                 weight: 4,
-                color: '#666',
-                fillOpacity: 0.9
+                color: 'rgb(206, 205, 195)',
+                fillOpacity: 1
             });
             foundLayer.bringToFront();
         }
@@ -253,8 +274,10 @@ export async function loadLayers(map, getState) {
 
         if (mode === 'snapshot') {
             renderBarChart(selectedRows, year);
+            renderLineChart(selectedRows);
         } else if (mode === 'change') {
             renderChangeChart(selectedRows, yearFrom, yearTo);
+            renderLineChart(selectedRows);
         }
 
         // Skip the currently hovered layer so we don't clobber its hover style
@@ -264,8 +287,6 @@ export async function loadLayers(map, getState) {
             }
         });
     });
-
-    const layerControl = L.control.layers(null, overlayMaps, { position: 'topleft' });
 
     window.addEventListener('resize', function() {
         const { year } = getState();

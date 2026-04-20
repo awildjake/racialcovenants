@@ -38,7 +38,6 @@
       <div class="leaflet-sidebar-tabs">
         <ul role="tablist">
           <li><a href="#home" role="tab"><img src="icons/bars.svg" class="icon"></a></li>
-          <li><a href="#layers" role="tab"><img src="icons/layer-group.svg" class="icon"></a></li>
           <li><a href="#about" role="tab"><img src="icons/question.svg" class="icon"></a></li>
           <!-- External link (not a tab pane) -->
         </ul>
@@ -54,19 +53,24 @@
             <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
           </h1>
           <div class="sidebar-wrapper">
-            <h3>Map Options</h3>
+            <h3>Select Map Visualization</h3>
             <!-- Mode buttons -->
-            <div id="mode" class="btn-group" role="group">
-              <button type="button" class="btn active" id="snapshot">Composition</button>
-              <button type="button" class="btn" id="covenant">Covenants</button>
-              <button type="button" class="btn" id="change">Change Over Time</button>
+            <div class="control-wrapper active">
+              <div class="dropdown-group" style="width: 100%;">
+                  <button class="dropdown-toggle btn" id="mode-select">Single Year Composition</button>
+                  <div class="dropdown-panel" id="mode-buttons">
+                    <a class="dropdown-item active" data-value="snapshot">Single Year Composition</a>
+                    <a class="dropdown-item" data-value="change">Composition Change Over Time</a>
+                    <a class="dropdown-item" data-value="covenant">Covenant Status</a>
+                  </div>
+              </div>
             </div>
             <div class="year-race-dropdown-wrapper">
             <!-- Race select -->
             <div class="control-wrapper active">
               <span>Race:</span>
               <div class="dropdown-group">
-                  <button class="dropdown-toggle btn" id="race-select">Asian ▾</button>
+                  <button class="dropdown-toggle btn" id="race-select">Asian</button>
                   <div class="dropdown-panel" id="race-buttons">
                     <a class="dropdown-item active" data-value="asian">Asian</a>
                     <a class="dropdown-item" data-value="black">Black</a>
@@ -79,7 +83,7 @@
             <div class="control-wrapper active" id="snapshot-controls">
               <span>Year:</span>
               <div class="dropdown-group">
-                  <button class="dropdown-toggle btn" id="snapshot-year-select">1940 ▾</button>
+                  <button class="dropdown-toggle btn" id="snapshot-year-select">1940</button>
                   <div class="dropdown-panel" id="snapshot-year-buttons">
                     <a class="dropdown-item active" data-value="1940">1940</a>
                     <a class="dropdown-item" data-value="1950">1950</a>
@@ -97,7 +101,7 @@
             <div class="control-wrapper" id="change-controls">
               <span>Year:</span>
               <div class="dropdown-group">
-                  <button class="dropdown-toggle btn" id="change-from-select">1940 ▾</button>
+                  <button class="dropdown-toggle btn" id="change-from-select">1940</button>
                   <div class="dropdown-panel" id="change-from-buttons">
                     <a class="dropdown-item active" data-value="1940">1940</a>
                     <a class="dropdown-item" data-value="1950">1950</a>
@@ -112,7 +116,7 @@
               </div>
               <span>—</span>
               <div class="dropdown-group">
-                  <button class="dropdown-toggle btn" id="change-to-select">2020 ▾</button>
+                  <button class="dropdown-toggle btn" id="change-to-select">2020</button>
                   <div class="dropdown-panel" id="change-to-buttons">
                     <h6 class="dropdown-header">Year</h6>
                     <a class="dropdown-item" data-value="1940">1940</a>
@@ -129,19 +133,8 @@
             </div>
             </div>
             <div id="district-info">
-                <p>Click a district to view details.</p>
+                <h3>Click a district to view details</h3>
             </div>
-            <div class="chart-wrapper" id="ed-bar-chart"></div>
-            <div class="chart-wrapper" id="ed-line-chart"></div>
-          </div>
-        </div>
-        <div class="leaflet-sidebar-pane" id="layers">
-          <h1 class="leaflet-sidebar-header">
-            Layers
-            <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
-          </h1>
-          <div class="leaflet-sidebar-pane">
-            <p>Welcome to my layer!</p>
           </div>
         </div>
         <div class="leaflet-sidebar-pane" id="about">

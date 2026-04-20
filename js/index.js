@@ -1,4 +1,5 @@
 import { loadLayers } from './layers.js';
+import { renderBarChart, renderLineChart, renderChangeChart } from './charts.js';
 
 let activeRace = 'asian';
 let activeYear = '1940';
@@ -6,9 +7,11 @@ let activeYearFrom = '1940';
 let activeYearTo = '2020';
 let activeMode = 'snapshot';
 let activeDistrict = null;
+let lastRows = null;
 
 document.addEventListener('districtSelected', function(e) {
     activeDistrict = e.detail.enumdist;
+    lastRows = e.detail.rows;
     console.log('Active district:', activeDistrict);
 });
 
@@ -25,7 +28,7 @@ function dispatchSelection() {
 };
 
 function initMap() {
-    const map = L.map('map').setView([37.33, -121.89], 13);
+    const map = L.map('map').setView([37.33644539259755, -121.8953672600045], 14);
 
     // Basemap
     var tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -57,6 +60,7 @@ function initSidebar(map) {
 
     map.addControl(sidebar);
     sidebar.open('home');
+    return sidebar;
 };
 
 function initDropdown(toggleId, panelId, onSelect) {
@@ -82,7 +86,7 @@ function initDropdown(toggleId, panelId, onSelect) {
         e.target.classList.add('active');
 
         // Update toggle button text
-        toggle.textContent = e.target.textContent + ' ▾';
+        toggle.textContent = e.target.textContent;
 
         // Closes the dropdown panel after selection by removing open class
         panel.classList.remove('open');
@@ -112,6 +116,12 @@ document.addEventListener('click', function(e) {
     }
 });
 
+initDropdown('mode-select', 'mode-buttons', function(value) {
+    activeMode = value;
+    setModeVisibility(activeMode);
+    dispatchSelection();
+});
+
 initDropdown('race-select', 'race-buttons', function(value) {
     activeRace = value;
     dispatchSelection();
@@ -139,22 +149,8 @@ updateChangeFromOptions();
 
 function setModeVisibility(mode) {
     document.getElementById('snapshot-controls').style.display = mode === 'snapshot' ? 'flex' : 'none';
-    document.getElementById('change-controls').style.display = mode === 'change' ? 'flex' : 'none';
-}
-
-document.getElementById('mode').querySelectorAll('.btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-        document.getElementById('mode').querySelectorAll('.btn').forEach(function(b) {
-            b.classList.remove('active');
-        });
-        this.classList.add('active');
-        activeMode = this.id;
-        console.log(activeMode);
-        setModeVisibility(activeMode);
-
-        dispatchSelection();
-    });
-});
+    document.getElementById('change-controls').style.display = (mode === 'change' || mode === 'covenant') ? 'flex' : 'none';
+};
 
 setModeVisibility('snapshot');
 
@@ -162,10 +158,10 @@ const map = initMap();
 const enumDistricts = await loadLayers(map, function() {
     return { mode: activeMode, race: activeRace, year: activeYear, yearFrom: activeYearFrom, yearTo: activeYearTo };
 });
-initSidebar(map);
+const sidebar = initSidebar(map);
 
 L.easyButton('<img src="icons/home.svg" class="icon">', function(btn, map){
-    map.setView([37.33, -121.89], 13);
+    map.setView([37.33644539259755, -121.8953672600045], 14);
 }).addTo(map);
 
 // add searchbar and reset easybutton
@@ -178,3 +174,15 @@ L.Control.geocoder({
         geocoder: geocoder,
         position: 'topleft'
     }).addTo(map);
+
+sidebar.on('opening', function() {
+    if (!lastRows) return;
+    setTimeout(function() {
+        if (activeMode === 'change') {
+            renderChangeChart(lastRows, activeYearFrom, activeYearTo);
+        } else {
+            renderBarChart(lastRows, activeYear);
+            renderLineChart(lastRows);
+        }
+    }, 300); // match your sidebar CSS transition duration
+});
