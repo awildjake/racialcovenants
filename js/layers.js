@@ -118,7 +118,7 @@ export async function loadLayers(map, getState) {
             const row = feature.properties.rows.find(function(r) { return r.year === year; });
             const covenantValue = row ? row['covenant'] : null;
             return {
-                fillColor: covenantValue === 1 ? 'red' : 'blue',
+                fillColor: covenantValue === 1 ? '#AF3029' : '#205EA6',
                 fillOpacity: 0.7,
                 color: 'rgb(230, 228, 217)',
                 weight: 2
@@ -249,7 +249,7 @@ export async function loadLayers(map, getState) {
             legendLabels = changeLabels;
         } else if (mode === 'covenant') {
             title = 'Covenant Status';
-            colors = ['blue', 'red'];
+            colors = ['#205EA6', '#AF3029'];
             legendLabels = ['No Covenants', 'Has Covenants'];
         }
 

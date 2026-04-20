@@ -37,8 +37,8 @@ export function renderBarChart(rows, year) {
     ].filter(function(d) { return d.value !== null && !isNaN(d.value); });
 
     const raceGroups = [
-        { label: 'Asian', key: 'share_asian', color: '#AF3029' },
-        { label: 'Black', key: 'share_black', color: '#205EA6' },
+        { label: 'Asian', key: 'share_asian', color: '#BC5215' },
+        { label: 'Black', key: 'share_black', color: '#24837B' },
         { label: 'Other', key: 'share_other', color: '#66800B' },
         { label: 'White', key: 'share_white', color: '#5E409D' }
     ];
@@ -218,8 +218,8 @@ export function renderLineChart(rows) {
 
     const years = ['1940', '1950', '1960', '1970', '1980', '1990', '2000', '2010', '2020'];
     const raceGroups = [
-        { label: 'Asian', key: 'share_asian', color: '#AF3029' },
-        { label: 'Black', key: 'share_black', color: '#205EA6' },
+        { label: 'Asian', key: 'share_asian', color: '#BC5215' },
+        { label: 'Black', key: 'share_black', color: '#24837B' },
         { label: 'Other', key: 'share_other', color: '#66800B' },
         { label: 'White', key: 'share_white', color: '#5E409D' }
     ];

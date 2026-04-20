@@ -5,7 +5,7 @@ let activeRace = 'asian';
 let activeYear = '1940';
 let activeYearFrom = '1940';
 let activeYearTo = '2020';
-let activeMode = 'snapshot';
+let activeMode = 'covenant';
 let activeDistrict = null;
 let lastRows = null;
 
