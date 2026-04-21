@@ -46,6 +46,14 @@ h3 {
     padding-bottom: 0.25rem;
 }
 
+.leaflet-container a {
+    color: var(--cy);
+}
+
+.leaflet-container a:hover {
+    text-decoration: underline;
+}
+
 .icon {
     width: 1.4rem;
     height: 1.4rem;
@@ -134,14 +142,20 @@ h3 {
 
 .dropdown-item {
     cursor: pointer;
+    color: var(--bl);
     padding: 0.25rem 1rem;
+}
+
+.leaflet-container a.dropdown-item {
+  color: var(--bl);
+  text-decoration: none;
 }
 
 .dropdown-item:hover {
     background-color: var(--ui-2);
 }
 
-.dropdown-item.active {
+.leaflet-container .dropdown-item.active {
     color: #ffffff;
     background-color: var(--bl);
 }

@@ -1,5 +1,5 @@
 import { loadLayers } from './layers.js';
-import { renderBarChart, renderLineChart, renderChangeChart } from './charts.js';
+import { renderBarChart, renderLineChart, renderChangeChart} from './charts.js';
 
 let activeRace = 'asian';
 let activeYear = '1940';

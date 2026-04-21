@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Long Term Effects of Restrictive Racial Covenants</title>
+    <meta name="description" content="San Jose racial covenant map.">
+    <meta name="theme-color" content="#fffff8"/>
+
+    <link rel="manifest" href="manifest.json" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+
+    <!-- Open Graph -->
+    <meta property="og:url" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="San Jose Racial Covenants">
+    <meta property="og:description" content="San Jose racial covenant map.">
+    <meta property="og:image" content="">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="">
+    <meta property="twitter:url" content="">
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="">
+
+    <!-- Custom styling -->
+    <link rel="stylesheet" href="css/tufte.css"/>
+    <link rel="stylesheet" href="css/tufte-additions.css"/>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>The Long Term Effects of Restrictive Racial Covenants: Evidence from San José (work in progress)</h1>
+            <p class="subtitle">By Jake Wilde</p>
+            <!--<div class="byline">
+                <address class="author">By <a rel="author">Jake Wilde</a></address>
+                <span style="margin: 0em 0.5em;"> • </span>
+                <time datetime="2026-04-13">April 13, 2026</time>
+            </div>-->
+        </header>
+        <section>
+            <p>"It is hereby covenanted and agreed that no part of said premises, or any building thereon, shall be used or occupied by any person or persons not of the white or Caucasian race," so goes the text of a racial restrictive covenant recorded to the deed of a home in the Naglee Park neighborhood of San Jose. Racial restrictive covenants—a type of contractual property agreement—such as this one were once extremely popular among white homeowners, favored as the best tool for establishing racially segregated neighborhoods until 1948, when the Supreme Court ruled them unconstitutional. However, this ruling did not mark the end of the racial covenant’s reign. Nearly 80 years later, it's clear segregationists picked the right tool for the job: racial covenants remain stalwart enforcers of racial segregation.</p>
+            <p>Evidence from San Jose reveals a sharp divide in the racial demographics of covenanted and uncovenanted neighborhoods. As of 2020, neighborhoods with historic racial restrictive covenants have smaller Asian and Black populations than neighborhoods without covenants. This divide has grown steadily since 1980, and, if left unchecked, may continue to grow.</p>
+            <figure>
+              <iframe title="Effect of Racial Covenants on Racial Composition in San Jose from 1940 to 2020" aria-label="Line chart" id="datawrapper-chart-Ts0gv" src="https://datawrapper.dwcdn.net/Ts0gv/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="501" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+            </figure>
+            <p>The chart above plots the covenant effect, the estimated percentage point difference between the racial composition of covenanted and non-covenanted neighborhoods. The bold line at zero on the Y-axis represents no difference between covenanted and non-covenanted neighborhoods. Values above the line indicate that covenanted neighborhoods have higher shares of residents from a given group; values below zero indicate lower shares.</p>
+            <p>Use the map to explore how racial covenants may have altered the demographic trends of 57 San Jose neighborhoods from 1940 to 2020.</p>
+            <figure class="fullwidth">
+                <input type="checkbox" id="mn-demo" class="margin-toggle"/>
+                <iframe 
+                src="index.html"
+                style="width: 100%; height: 500px; border: 0;">
+                </iframe>
+            </figure>
+            <p style="font-style: italic;">This map is a companion piece to a report documenting the long-term effects of racial restrictive covenants. To read more about covenants, click <a href="test">here</a>.</p>
+          </section>
+    </article>
+</body>
+</html>
