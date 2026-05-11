@@ -137,14 +137,14 @@ export async function loadLayers(map, getState) {
 
         if (mode === 'snapshot') {
             renderBarChart(selectedRows, year);
-        } else {
+        } else if (mode === 'change') {
             renderChangeChart(selectedRows, yearFrom, yearTo);
+        } else {
+            // covenant: only render the line chart
+            renderLineChart(selectedRows);
+            return;
         }
         renderLineChart(selectedRows);
-
-        document.dispatchEvent(new CustomEvent('districtSelected', {
-            detail: { enumdist: enumdist, rows: rows }
-        }));
     }
 
     // Track which layer is currently hovered at the map level
@@ -272,15 +272,23 @@ export async function loadLayers(map, getState) {
 
         legend.update(e.detail);
 
+        const barContainer = document.querySelector('#ed-bar-chart');
+        const lineContainer = document.querySelector('#ed-line-chart');
+        if (barContainer) barContainer.innerHTML = '';
+        if (lineContainer) lineContainer.innerHTML = '';
+
         if (mode === 'snapshot') {
             renderBarChart(selectedRows, year);
             renderLineChart(selectedRows);
         } else if (mode === 'change') {
             renderChangeChart(selectedRows, yearFrom, yearTo);
             renderLineChart(selectedRows);
+        } else {
+            // covenant: only line chart
+            if (selectedRows) renderLineChart(selectedRows);
+            document.getElementById('ed-bar-chart').style.display = (mode === 'covenant' ) ? 'none' : 'flex';
         }
 
-        // Skip the currently hovered layer so we don't clobber its hover style
         enumDistricts.eachLayer(function(layer) {
             if (!layer._isHovered) {
                 layer.setStyle(getFeatureStyle(layer.feature));

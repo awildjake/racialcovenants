@@ -149,10 +149,11 @@ updateChangeFromOptions();
 
 function setModeVisibility(mode) {
     document.getElementById('snapshot-controls').style.display = mode === 'snapshot' ? 'flex' : 'none';
-    document.getElementById('change-controls').style.display = (mode === 'change' || mode === 'covenant') ? 'flex' : 'none';
+    document.getElementById('change-controls').style.display = (mode === 'change' ) ? 'flex' : 'none';
+    document.querySelector('.year-race-dropdown-wrapper').style.display = mode === 'covenant' ? 'none' : 'flex';
 };
 
-setModeVisibility('snapshot');
+setModeVisibility('covenant');
 
 const map = initMap();
 const enumDistricts = await loadLayers(map, function() {
@@ -180,8 +181,9 @@ sidebar.on('opening', function() {
     setTimeout(function() {
         if (activeMode === 'change') {
             renderChangeChart(lastRows, activeYearFrom, activeYearTo);
-        } else {
+        } else if (activeMode === 'snapshot') {
             renderBarChart(lastRows, activeYear);
+        } else {
             renderLineChart(lastRows);
         }
     }, 300); // match your sidebar CSS transition duration
