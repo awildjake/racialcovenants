@@ -277,6 +277,9 @@ export async function loadLayers(map, getState) {
         if (barContainer) barContainer.innerHTML = '';
         if (lineContainer) lineContainer.innerHTML = '';
 
+        // Hide bar container in covenant mode, show otherwise
+        if (barContainer) barContainer.style.display = mode === 'covenant' ? 'none' : '';
+
         if (mode === 'snapshot') {
             renderBarChart(selectedRows, year);
             renderLineChart(selectedRows);
@@ -284,9 +287,7 @@ export async function loadLayers(map, getState) {
             renderChangeChart(selectedRows, yearFrom, yearTo);
             renderLineChart(selectedRows);
         } else {
-            // covenant: only line chart
             if (selectedRows) renderLineChart(selectedRows);
-            document.getElementById('ed-bar-chart').style.display = (mode === 'covenant' ) ? 'none' : 'flex';
         }
 
         enumDistricts.eachLayer(function(layer) {
