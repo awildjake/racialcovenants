@@ -89,18 +89,14 @@ export async function loadLayers(map, getState) {
 
     function getFeatureStyle(feature) {
         const { mode, race, year, yearFrom, yearTo } = getState();
+        let fillColor;
 
         if (mode === 'snapshot') {
             const row = feature.properties.rows.find(function(r) { return r.year === year; });
             const value = row ? row['share_' + race] : null;
             const mean  = row ? row['mean_'  + race] : null;
             const sd    = row ? row['sd_'    + race] : null;
-            return {
-                fillColor: getColor(value, mean, sd),
-                fillOpacity: 0.7,
-                color: 'rgb(230, 228, 217)',
-                weight: 2
-            };
+            fillColor = getColor(value, mean, sd);
         } else if (mode === 'change'){
             const rowFrom = feature.properties.rows.find(function(r) { return r.year === yearFrom; });
             const rowTo   = feature.properties.rows.find(function(r) { return r.year === yearTo; });
@@ -108,25 +104,26 @@ export async function loadLayers(map, getState) {
             const shareTo   = rowTo   ? rowTo['share_'   + race] : null;
             const change = (shareFrom !== null && shareTo !== null && !isNaN(shareFrom) && !isNaN(shareTo))
                 ? shareTo - shareFrom : null;
-            return {
-                fillColor: getChangeColor(change),
-                fillOpacity: 0.7,
-                color: 'rgb(230, 228, 217)',
-                weight: 2
-            };
+            fillColor = getChangeColor(change);
         } else if (mode === 'covenant') {
             const row = feature.properties.rows.find(function(r) { return r.year === year; });
             const covenantValue = row ? row['covenant'] : null;
-            return {
-                fillColor: covenantValue === 1 ? '#AF3029' : '#205EA6',
-                fillOpacity: 0.7,
-                color: 'rgb(230, 228, 217)',
-                weight: 2
-            };
+            fillColor = covenantValue === 1 ? '#AF3029' : '#205EA6';
         }
+
+        const isSelected = feature.properties.ENUMDIST === selectedEnumdist;
+
+        return {
+            fillColor: fillColor,
+            fillOpacity: 0.7,
+            color: isSelected ? '#000000' : 'rgb(230, 228, 217)',
+            weight: isSelected ? 3 : 2
+        };
     }
 
     let selectedRows = null;
+    let selectedEnumdist = null;
+    let selectedLayer = null;
 
     function selectDistrict(enumdist, layer, rows) {
         selectedRows = rows;
@@ -161,6 +158,17 @@ export async function loadLayers(map, getState) {
         onEachFeature: function(feature, layer) {
             layer.on({
                 click: function() {
+                    const previousLayer = selectedLayer;
+                    selectedEnumdist = feature.properties.ENUMDIST;
+                    selectedLayer = layer;
+
+                    if (previousLayer && previousLayer !== layer) {
+                        previousLayer.setStyle(getFeatureStyle(previousLayer.feature));
+                    }
+
+                    layer.setStyle(getFeatureStyle(feature));
+                    layer.bringToFront();
+
                     selectDistrict(feature.properties.ENUMDIST, layer, feature.properties.rows);
                 }
             });
