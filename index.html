@@ -38,6 +38,7 @@
       <div class="leaflet-sidebar-tabs">
         <ul role="tablist">
           <li><a href="#home" role="tab"><img src="icons/bars.svg" class="icon"></a></li>
+          <li><a href="#help" role="tab"><img src="icons/layer-group.svg" class="icon"></a></li>
           <li><a href="#about" role="tab"><img src="icons/question.svg" class="icon"></a></li>
           <!-- External link (not a tab pane) -->
         </ul>
@@ -49,11 +50,11 @@
       <div class="leaflet-sidebar-content">
         <div class="leaflet-sidebar-pane active" id="home">
           <h1 class="leaflet-sidebar-header">
-            Demographics
+            Map Controls
             <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
           </h1>
           <div class="sidebar-wrapper">
-            <h3>Select Map Visualization</h3>
+            <h3>Select Map Mode</h3>
             <!-- Mode buttons -->
             <div class="control-wrapper active">
               <div class="dropdown-group" style="width: 100%;">
@@ -148,9 +149,33 @@
             <p style="font-style: italic;">This map is a companion piece to a report documenting the long-term effects of racial restrictive covenants. To read more about covenants, click <a href="report.pdf">here</a>.</p>
           </div>
         </div>
+        <div class="leaflet-sidebar-pane" id="help">
+          <h1 class="leaflet-sidebar-header">
+            Map Control Instructions
+            <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+          </h1>
+          <div class="sidebar-wrapper">
+            <p>The "Select Map Mode" option changes the data displayed on the map. There are three map modes:</p>
+            <p><strong>Covenant Status</strong> is the default map mode. This mode alters the map to indicate whether a district has any racial covenants within its boundaries. Selecting a district with this mode enabled displays a chart showing racial demographics over time in the sidebar.</p>
+            <p><strong>Racial Composition</strong> visualizes the distribution of a given race for a given year.</p>
+            <p><strong>Composition Change Over Time</strong> visualizes population changes for a given group and time span.</p>
+          </div>
+        </div>
       </div>
     </div>
     <div id="map"></div>
+
+    <!-- Intro modal -->
+    <div id="intro-modal" class="modal-overlay">
+      <div class="modal-box">
+        <h2>San Jose Racial Covenant and Demographic Explorer</h2>
+        <p><strong>Racial restrictive covenants</strong> were legal property agreements used by homeowners in the United States during the first half of the 20th century to prohibit non-white buyers from purchasing or leasing property. While the enforcement of racial covenants has been unconstitutional for nearly 80 years, recent evidence from San Jose suggests covenants remain stalwart enforcers of racial segregation.</p>
+        <p>Use this map to explore how racial covenants may have effected the long-run demographic development of San Jose.</p>
+        <p style="font-style: italic;">This map is a companion piece to a report documenting the long-term effects of racial restrictive covenants. To read more about covenants, click <a href="report.pdf">here</a>.</p>
+        <button id="modal-explore-btn" class="btn">Explore</button>
+      </div>
+    </div>
+  
     <script type="module" src="js/index.js"></script>
   </body>
 </html>

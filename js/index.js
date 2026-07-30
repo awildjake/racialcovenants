@@ -109,6 +109,11 @@ function updateChangeFromOptions() {
     });
 }
 
+// Intro modal: shows on every load, dismissed via the Explore button
+document.getElementById('modal-explore-btn').addEventListener('click', function() {
+    document.getElementById('intro-modal').classList.add('hidden');
+});
+
 // Close any open dropdown when clicking outside
 document.addEventListener('click', function(e) {
     if (!e.target.closest('.dropdown-group')) {
