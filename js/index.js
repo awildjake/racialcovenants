@@ -181,8 +181,10 @@ sidebar.on('opening', function() {
     setTimeout(function() {
         if (activeMode === 'change') {
             renderChangeChart(lastRows, activeYearFrom, activeYearTo);
+            renderLineChart(lastRows);
         } else if (activeMode === 'snapshot') {
             renderBarChart(lastRows, activeYear);
+            renderLineChart(lastRows);
         } else {
             renderLineChart(lastRows);
         }

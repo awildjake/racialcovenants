@@ -133,6 +133,10 @@ export async function loadLayers(map, getState) {
         document.getElementById('district-info').innerHTML =
             '<strong style="text-align: center;">Enumeration District: ' + enumdist + '.</strong>';
 
+        document.dispatchEvent(new CustomEvent('districtSelected', {
+            detail: { enumdist, rows }
+        }));
+
         const { mode, year, yearFrom, yearTo } = getState();
 
         if (mode === 'snapshot') {
